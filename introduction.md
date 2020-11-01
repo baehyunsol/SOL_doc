@@ -9,5 +9,6 @@ Being functional, SOL provides
 3. First class functions
 4. Lambda functions (capturing its environment)
 5. Garbage collector (Not yet)
+6. Everything is an expression
 
 It's heavily influenced by Python, Scheme, and got some inspirations from Rust, Haskell and Elixir.
