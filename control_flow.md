@@ -123,7 +123,7 @@ All the local variables are lazily evaluated.
 
 Names of the locals should begin with a letter '$'.
 
-When using local vars, the function body must be wrapped with braces.
+When using local vars, the function body must be wrapped with curly braces.
 
 
 ### Pipeline (Working in progress)
