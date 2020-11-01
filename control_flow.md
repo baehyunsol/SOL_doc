@@ -67,7 +67,7 @@ def iteration(iter^, index, result^) {
     )
 }
 
-# you might wonder what '^' and '+=' do. I'll talk about that later. #
+# you might wonder what '^' and '+=' do. Read function.md file. #
 ```
 Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary in functional languages.
 
