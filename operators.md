@@ -2,35 +2,35 @@
 
 SOL has quite lots of operators and **all of them can be overloaded**. I'll explain the default behaviors of the operators here.
 
-1. `+`: add/push operator
+### `+`: add/push operator
 ```python
 3 + 4       # 7 #
 [1, 2, 3] + 4   # [1, 2, 3, 4] #
 [1, 2, 3] + [4, 5, 6]  # [1, 2, 3, [4, 5, 6]]
 ```
 
-2. `*`, `-`, `%`, `*`, `and`, `or`, `not`, `==`, `>`, `<`, `!=`, `>=`, `<=`
+### `*`, `-`, `%`, `*`, `and`, `or`, `not`, `==`, `>`, `<`, `!=`, `>=`, `<=`
 
 Nothing special about above.
 
 We dont't use `&&` and `||` in SOL.
 
 
-3. `//`: floordiv operator
+### `//`: floordiv operator
 
 It's equivalent to `//` operator in Python (a // b returns int(a / b)).
 
-4. `/`: div operator
+### `/`: div operator
 
 `int / int` returns a `frac`, not an `int`.
 
-5. `++`: concatenation operator
+### `++`: concatenation operator
 ```python
 [1, 2, 3] ++ [3, 4, 5]  # [1, 2, 3, 3, 4, 5] #
 "hello" ++ " world!"    # "hello world!" #
 ```
 
-6. `in` operator
+### `in` operator
 
 It checks if an iterator contains an element.
 ```python
@@ -39,7 +39,7 @@ It checks if an iterator contains an element.
 ```
 
 
-7. list update operators
+### list update operators
 
 `_u` updates a single value in a list.
 ```python
