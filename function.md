@@ -30,6 +30,15 @@ That doesn't raise any error though, because `+` can be overloaded.
 ### First class function
 You can return a function, or pass it as an argument.
 
+```python
+def add1(x) x + 1
+def add2(x) x + 2
+
+def apply(f, x) f(x)
+
+def main() print(apply(f = add1, x = 3))  # 4 #
+```
+
 SOL supports lambda functions (working in progress) that captures its environment.
 
 It uses Python-like syntax. See below.
