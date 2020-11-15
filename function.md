@@ -18,7 +18,7 @@ def sub(x, y=0) x - y  # Default arguments #
 Functions and constants are different.
 In the example above, if you want the pi value, you should either call `pi()` or use `PI`.
 
-If you call `PI()`, that would be calling `3.14()`, raising a runtime error.
+If you call `PI()`, that would be calling `3.14()`, which would raise a runtime error.
 
 Calling a `frac` instance is not defined in SOL, and overloading `__call__` is not supported in SOL.
 
@@ -39,7 +39,7 @@ def apply(f, x) f(x)
 def main() print(apply(f = add1, x = 3))  # 4 #
 ```
 
-SOL supports lambda functions (working in progress) that captures its environment.
+SOL supports lambda functions that captures its environment.
 
 It uses Python-like syntax. See below.
 ```python
