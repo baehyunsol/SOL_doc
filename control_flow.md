@@ -169,3 +169,9 @@ def count_even_length_nums(nums)
     :|
 ```
 Looks much better.
+
+If you want shorter one and readability doesn't matter, use list comprehensions.
+```python
+def count_even_length_nums(nums)
+    len([le | [len; s | [str(n); n | nums]]; le % 2 == 0])
+```
