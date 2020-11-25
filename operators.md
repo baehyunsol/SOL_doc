@@ -2,7 +2,7 @@
 
 SOL has quite lots of operators and **all of them can be overloaded**. I'll explain the default behaviors of the operators here.
 
-### `+`: add/push operator
+### `+`: add/append operator
 ```python
 3 + 4       # 7 #
 [1, 2, 3] + 4   # [1, 2, 3, 4] #
@@ -39,43 +39,49 @@ It checks if an iterator contains an element.
 ```
 
 
-### list update operators
+### `|` operator
 
-`_u` updates a single value in a list.
+`|` is an update operator.
+
+Among basic types, only `list` has its implementation.
+
+Based on the second operand, `|` does 3 operations on a `list`.
+
+#### Update a single element
 ```python
-list _u [index, value]  # list[index] = value #
+# list | [index, value]  ->  list[index] = value #
+# index should be an integer. #
+# The second operand of | should be a list with two elements. #
 
-[1, 2, 3] _u [2, 10]  # [1, 2, 10] #
-
-# use . to update a member variable #
-player _u [.x, player.x + player.x_speed]
+[1, 2, 3, 4, 5] | [1, 10]  # [1, 10, 3, 4, 5] #
 ```
 
-`_um` updates Multiple values in a list.
+#### Update multiple elements
 ```python
-list _um [[index1, value1], [index2, value2], ...]
+# list | [[index1, value1], [index2, value2], [index3, value3]]#
+# The second operand of | should be a list with pairs of indexes and values. #
 
-[1, 2, 3, 4, 5, 6] _um [[0, 10], [2, 20]]  # [10, 2, 20, 4, 5, 6] #
-
-player _um [
-    [.x, player.x + player.x_speed],
-    [.y, player.y + player.y_speed]
-]
+[1, 2, 3, 4, 5, 6, 7] | [[0, -1], [2, -3], [4, -5]]  # [-1, 2, -3, 4, -5] #
 ```
 
-`_ud` updates a multi Dimensional list.
-
+#### Update a multidimensional list
 ```python
-a _ud [b, c, d, e]  # a[b][c][d] = e #
+# list | [index1, index2, index3, value] -> list[index1][index2][index3] = value #
+# The second operand of | should be a list(not nested) with multiple index integers and a value. #
+
+[1, 2, [3, 4, [5, 6]] | [2, 2, 1, 100]  # [1, 2, [3, 4, [5, 100]]] #
 ```
 
-It's just a syntactic sugar for
+`a | [b, c, d, e]` is just a syntactic sugar for
 ```python
-a _u [
+a | [
     b,
-    a[b] _u [
+    a[b] | [
         c,
-        a[b][c] _u [d, e]
+        a[b][c] | [
+            d,
+            e
+        ]
     ]
 ]
 ```
