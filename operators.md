@@ -13,7 +13,7 @@ SOL has quite lots of operators and **all of them can be overloaded**. I'll expl
 
 Nothing special about above.
 
-We dont't use `&&` and `||` in SOL.
+We dont't use `!`, `&&` and `||` in SOL.
 
 
 ### `//`: floordiv operator
