@@ -39,9 +39,7 @@ It checks if an iterator contains an element.
 ```
 
 
-### `|` operator
-
-`|` is an update operator.
+### `|`: update operator
 
 Among basic types, only `list` has its implementation.
 
