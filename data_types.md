@@ -59,15 +59,24 @@ a[::-1]                # reverse a list #
 
 
 # list comprehension #
-[x * x; x | [..100]; x % 2 == 0]           # [expr for x in iter if expr] #
-[x * x for x in range(100) if x % 2 == 0]  # Python counterpart #
-[n | [..1000]; is_prime(n)]                # filter only #
-[x * x; x | [..20]]                        # map only #
-[x * y; x|[..3]; y|[..4]]                  # [[0, 0, 0], [0, 1, 2], [0, 2, 4], [0, 3, 6]] #
+[
+    do: x * x;
+    for: x, [..20];
+    if: x % 2 == 0;
+]
+# quite intuitive, isn't it? #
+# You can omit do or if but not both #
+
+[
+    do: x * y;
+    for: x, [..3];
+    for: y, [..4];
+]
+# 2-dimensional list comprehension #
 ```
 
 
-### Struct (Working in progress)
+### Struct (Work in progress)
 ```python
 struct player {
     x, y, x_speed = 3, y_speed = 3,
@@ -76,5 +85,7 @@ struct player {
 
 # let's say p1 is an instance of player #
 p1.x   # accessing a member variable #
+
+p1 | [.x, p1.x + p1.x_speed]  # updating a member variable (if not overloaded) #
 ```
 Simply it's a typed named tuple.
