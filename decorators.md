@@ -129,3 +129,6 @@ def stack_append(x, y) {
 - `!=`: not equal
 - `not`: not
 - `[]`: index, index(a, b) for a[b]
+
+
+[Back to SOL_doc](README.md)
