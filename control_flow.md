@@ -175,3 +175,6 @@ If you want shorter one and readability doesn't matter, use list comprehensions.
 def count_even_length_nums(nums)
     len([le | [len; s | [str(n); n | nums]]; le % 2 == 0])
 ```
+
+
+[Back to SOL_doc](README.md)
