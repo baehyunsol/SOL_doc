@@ -12,3 +12,7 @@ Being functional, SOL provides
 6. Everything is an expression
 
 It's heavily influenced by Python, Scheme, and got some inspirations from Rust, Haskell and Elixir.
+
+
+
+[Back to SOL_doc](README.md)
