@@ -64,11 +64,12 @@ foo(3, 4)       # illegal #
 
 
 There are some syntactic sugars that helps implementing loops using recursions.
-`foo(x^)` -> `foo(x = x)`
 
-`foo(x -= 3)` -> `foo(x = x - 3)`
+`foo(x^)` for `foo(x = x)`
 
-You'll see better examples in control_flow.md.
+`foo(x -= 3)` for `foo(x = x - 3)`
+
+You'll see more examples in control_flow.md.
 
 
 
