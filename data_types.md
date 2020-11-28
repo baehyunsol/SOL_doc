@@ -89,3 +89,6 @@ p1.x   # accessing a member variable #
 p1 | [.x, p1.x + p1.x_speed]  # updating a member variable (if not overloaded) #
 ```
 Simply it's a typed named tuple.
+
+
+[Back to SOL_doc](README.md)
