@@ -33,21 +33,25 @@ Type checks are done at run time. The number of arguments is at most 2.
 
 Let's say you want `len()` function to work on your own `stack` type.
 ```python
-<<for x: stack>>
-def len(x) {
+<<len for x: stack>>
+def len_stack(x) {
     # function body goes here #
 }
 ```
 
+When you call `len()` with a `stack`, the above function will be called.
+
+You can still use `len_stack` just like any other function.
+
 To define a default behavior of a function, use `any` type.
 ```python
-<<for x: stack>>
-def len(x) {
+<<len for x: stack>>
+def len_stack(x) {
     # len() function for your stack type #
 }
 
-<<for x: any>>
-def len(x) {
+<<len for x: any>>
+def len_any(x) {
     # default len() function #
 }
 ```
@@ -72,18 +76,17 @@ Let's say you implemented a stack.
 First, you need a concat operator for two stacks.
 ```python
 <<++ for x: stack, y: stack>>
-def stack_concat(x, y) {
+def concat_stack(x, y) {
     # function body goes here #
 }
 ```
 
 With the above decorator, `stack_concat` function is called everytime `++` is used with matching types.
-You can still use the `stack_concat` function like a normal function.
 
 Next, you need an append operator that works with any type.
 ```python
 <<+ for x: stack, y: any>>
-def stack_append(x, y) {
+def append_stack(x, y) {
     # function body goes here #
 }
 ```
