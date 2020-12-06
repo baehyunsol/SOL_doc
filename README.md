@@ -11,3 +11,4 @@ The language is still under development. It's in a private repo, which will be o
 4. [control flow](control_flow.md)
 5. [function](function.md)
 6. [decorator](decorators.md)
+7. [examples](examples.md)
