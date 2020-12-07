@@ -28,15 +28,28 @@ False        # integer 0 #
 
 ### List
 
-**It's not the list in C++. It's a Python list. In other languages it's called vector.**
+**It's not the list in C++. It's a Python list. In other languages it's called vector/array.**
 
 Use square brackets to create or index a list.
 ```python
-[1, 2, 3]                   # list #
-[1, 2, 3, 3.14, [1, 2, 3]]  # It's dynamically typed. #
-[1, 2, 3][1]                # index #
-[1, 2, 3, 4][-1]            # negative index #
+# list #
+[1, 2, 3]
+
+# It's dynamically typed. #
+[1, 2, 3, 3.14, [1, 2, 3]]
+
+# Indexing #
+[1, 2, 3][1]              # 2 #
+[1, 2, 3][2]              # 3 #
+[1, 2, 3, 4][-1]          # 4 #
+[1, 2, 3, 4][-2]          # 3 #
+[1, 2, 3][3]              # Returns an error instead of crashing #
 ```
+It's the only type that is implemented directly inside SOL Runtime, which means it's the fastest.
+It takes O(1) to index.
+It **always** takes O(n) to update / concat / append.
+Since it's immutable, it has to create an entire list each time those operations are applied.
+Use stack instead when it's updated frequently.
 
 SOL has fancy built_in syntaxes for lists.
 ```python
@@ -55,6 +68,9 @@ list(range(0, 100, 2))  # Python counterpart #
 a[3:10:2]               # SOL and Python has indentical syntax for slicing a list #
 # In case you don't know, it's [start:end:step] #
 a[::-1]                # reverse a list #
+
+# Creating and indexing a slice object for a list takes O(1) time. #
+# Doing other operations takes O(n) time because it has to create a new object. #
 
 
 
@@ -86,7 +102,7 @@ struct player {
 # let's say p1 is an instance of player #
 p1.x   # accessing a member variable #
 
-p1 | [.x, p1.x + p1.x_speed]  # updating a member variable (if not overloaded) #
+p1 | [.x, p1.x + p1.x_speed]  # updating a member variable (if the update operator is not overloaded) #
 ```
 Simply it's a typed named tuple.
 
