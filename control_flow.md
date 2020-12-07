@@ -69,7 +69,7 @@ def iteration(iter^, index, result^) {
 
 # you might wonder what '^' and '+=' do. Read function.md file. #
 ```
-Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary since its a pure function.
+Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary since it's a pure function.
 
 There are two ways to avoid such redundancy.
 
