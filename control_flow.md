@@ -25,7 +25,7 @@ is equivalent to
     expr3
 )
 ```
-Chains of `@` means `if elif elif ... `. `@ => ` is a syntactic sugar for `@ True => `which is used as `else` branch.
+Chains of `@` means `if elif elif ... `. `@ => ()` is a syntactic sugar for `@ True => ()`which is used as `else` branch.
 
 The entire chain is an expression that returns a value depending on the conditions.
 
@@ -69,7 +69,7 @@ def iteration(iter^, index, result^) {
 
 # you might wonder what '^' and '+=' do. Read function.md file. #
 ```
-Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary in functional languages.
+Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary since its a pure function.
 
 There are two ways to avoid such redundancy.
 
@@ -96,85 +96,31 @@ def iteration(iter^, index, result^) {
 `call_it` operator assigns a value to another name. The name must begin with a letter '$'.
 
 
-Second is to declare a local variable.
-```python
-def iteration(iter^, index, result^) {
+### Pipelines
 
-    $value1 = do_something(iter[index]);
+If you want more complicated chains of `call_it` operators, use pipelines.
 
-    @ index == len(iter) => (result)
+```
+def return_15() {
 
-    @ is_valid(iter[index]) => (
-        iteration(
-            index = get_next_index(
-                $value1
-            ),
-            result += $value1
-        )
-    )
-
-    @ => (
-        iteration(index += 1)
-    )
+    |:
+        $a = 1;
+        $b = 2;
+        $c = $a + 3;
+        $d = $b + $c;
+        $a + $b + $c + $d
+    :| + 2
 }
 ```
 
-All the local variables are lazily evaluated.
+Pipeline begins with `|:` and ends with `:|`.
 
-Names of the locals should begin with a letter '$'.
+Pipeline is a syntactic sugar for `call_it` operators. It automatically assign local variables and reshape the inner expression.
 
-When using local vars, the function body must be wrapped with curly braces.
+Each declaration must be seperated by semi colon. The expression comes at the last and it's the value of the entire pipeline.
 
+The entire pipeline is a single expression. Local variables declared inside a pipeline cannot be accessed outside.
 
-### Pipeline (Working in progress)
-```python
-def count_even_length_nums(nums):
-
-    strings = map(str, nums)
-    lengths = map(len, strings)
-    evens = filter(lambda x: x % 2 == 0, lengths)
-    return len(list(evens))
-```
-
-Above is a Python code that counts how many numbers in the list are even numbers of digits long.
-
-If you want to do the samething is SOL, that would be like below.
-```python
-def count_even_length_nums(nums)
-
-    len(
-        filter(
-            func = lmd x: x % 2 == 0,
-            iter = map(
-                func = len,
-                iter = map(
-                    func = str,
-                    iter = nums
-                )
-            )
-        )
-    )
-```
-That's verbose... isn't it?
-
-How about this one?
-```python
-def count_even_length_nums(nums)
-
-    |:
-        map(func = str, iter = nums)
-        -> map(func = len, iter = $)
-        -> filter(func = lmd x: x % 2 == 0, iter = $)
-        -> len($)
-    :|
-```
-Looks much better.
-
-If you want shorter one and readability doesn't matter, use list comprehensions.
-```python
-def count_even_length_nums(nums)
-    len([le | [len; s | [str(n); n | nums]]; le % 2 == 0])
-```
 
 
 [Back to SOL_doc](README.md)
