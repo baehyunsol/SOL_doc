@@ -115,11 +115,13 @@ def return_15() {
 
 Pipeline begins with `|:` and ends with `:|`.
 
-Pipeline is a syntactic sugar for `call_it` operators. It automatically assign local variables and reshape the inner expression.
+Pipeline is a syntactic sugar for `call_it` operators. It automatically assign local variables and reshape the inner expressions.
+
+You don't have to care about the orders of the declarations, compiler arranges them.
 
 Each declaration must be seperated by semi colon. The expression comes at the last and it's the value of the entire pipeline.
 
-The entire pipeline is a single expression. Local variables declared inside a pipeline cannot be accessed outside.
+The entire pipeline is a single expression.
 
 
 
