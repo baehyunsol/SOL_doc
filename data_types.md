@@ -92,6 +92,12 @@ a[::-1]                # reverse a list #
 ```
 
 
+### Dictionary
+
+Use braces to define a new dictionary. In other languages, it's called hash table, or a map.
+(Add more explanations later...)
+
+
 ### Struct (Work in progress)
 ```python
 struct player {
