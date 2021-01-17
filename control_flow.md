@@ -44,87 +44,162 @@ switch x => (
 ```
 
 
-### Local variables
-You can declare immutable local variables for efficiency.
-
-See the example below
-```python
-def iteration(iter^, index, result^) {
-
-    @ index == len(iter) => (result)
-
-    @ is_valid(iter[index]) => (
-        iteration(
-            index = get_next_index(
-                do_something(iter[index])
-            ),
-            result += do_something(iter[index])
-        )
-    )
-
-    @ => (
-        iteration(index += 1)
-    )
-}
-
-# you might wonder what '^' and '+=' do. Read function.md file. #
-```
-Do you see that `do_something()` is called twice with same arguments? It's totally unnecessary since it's a pure function.
-
-There are two ways to avoid such redundancy.
-
-First is to use `call_it` operator.
-```python
-def iteration(iter^, index, result^) {
-
-    @ index == len(iter) => (result)
-
-    @ is_valid(iter[index]) => (
-        iteration(
-            index = get_next_index(
-                do_something(iter[index]) call_it $value1
-            ),
-            result += $value1
-        )
-    )
-
-    @ => (
-        iteration(index += 1)
-    )
-}
-```
-`call_it` operator assigns a value to another name. The name must begin with a letter '$'.
-
-
 ### Pipelines
 
-If you want more complicated chains of `call_it` operators, use pipelines.
+Pipelines are used for complex control flows.
 
+You can declare local variables inside a pipeline. All the variables are immutable lazily evaluated.
+
+```python
+|:
+    $a = f();
+    $b = g();
+    $a + $b
+:|
 ```
-def return_15() {
 
-    |:
-        $a = 1;
-        $b = 2;
-        $c = $a + 3;
-        $d = $b + $c;
-        $a + $b + $c + $d
-    :| + 2
+Above code is basically `f() + g()`, but with local variables. Every variable declaration has to end with a semi colon. The last expression, which is the value of the entire pipeline, doesn't have a trailing semi colon.
+
+
+### Syntactic sugar for loops
+
+When you're to translate a C-style for-loop into SOL, you have to use recursive functions. I'll go with an example. See below.
+
+```c
+// C version
+for (int i = 0; i < length; i++) {
+    
+    if (f(array[i])) {
+        result[i] = g(i)
+    }
+    
+    else {
+        result[i] = h(i)
+    }
+
 }
 ```
 
-Pipeline begins with `|:` and ends with `:|`.
+```python
 
-Pipeline is a syntactic sugar for `call_it` operators. It automatically assign local variables and reshape the inner expressions.
+# SOL version #
+fn iter(index, length, array, result) {
 
-You don't have to care about the orders of the declarations, compiler arranges them. They're all lazily evaluated.
+    @ index == length {
+        result
+    }
 
-Each declaration must be seperated by semi colon. The expression comes at the last and it's the value of the entire pipeline.
+    @ f(array[i]) => (
+        iter(
+            index = index + 1,
+            length = length,
+            array = array,
+            result = result | [i, g(i)]
+        )
+    )
+    
+    @ => (
+        iter(
+            index = index + 1,
+            length = length,
+            array = array,
+            result = result | [i, h(i)]
+        )
+    )
+}
 
-The entire pipeline is a single expression.
+```
 
-Local variables declared inside a pipeline are bound to the scope. You cannot access them outside.
+In the SOL version, `index = index + 1`, `length = length`, and `array = array` look quite needless. Those can be shortened with `^` and `+=`.
 
+```python
 
+# SOL shortened version1 #
+fn iter(index, length, array, result) {
+
+    @ index == length {
+        result
+    }
+
+    @ f(array[i]) => (
+        iter(
+            index += 1,
+            length^,
+            array^,
+            result |= [i, g(i)]
+        )
+    )
+    
+    @ => (
+        iter(
+            index += 1,
+            length^,
+            array^,
+            result |= [i, h(i)]
+        )
+    )
+}
+
+```
+
+`a += b` is short for `a = a + b`, so is `|=`, and `x^` is for `x = x`. These syntactic sugars can be used when whatever function is called.
+
+BTW, above still looks verbose. Let's shorten it even further.
+
+```python
+
+# SOL shortened version2 #
+fn iter(index += 1, length^, array^, result) {
+
+    @ index == length {
+        result
+    }
+
+    @ f(array[i]) => (
+        iter(
+            result |= [i, g(i)]
+        )
+    )
+    
+    @ => (
+        iter(
+            result |= [i, h(i)]
+        )
+    )
+}
+
+```
+
+You can use `^` and `+=` as default values.
+
+So, is that idiomatic SOL code? I guess not... How about this one?
+
+```python
+def iter(index += 1, length^, array^, result) {|:
+    $new_result = @ f(array[i]) => (
+        result | [i, g(i)]
+    )
+    @ => (
+        result | [i, h(i)]
+    );
+    
+    @ index == length => (result)
+    
+    @ => (
+        iter($new_result)
+    )
+:|}
+```
+
+It's better, but not fully functional yet.
+
+```
+[
+    do: @ f(array[i]) => (g(i)) @ => (h(i));
+    for: i, [..len(array)];
+]
+```
+
+Above is the final translation of the C-style for-loop into an idiomatic SOL code.
 
 [Back to SOL_doc](README.md)
